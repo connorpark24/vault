@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import Sidebar from "@/components/Sidebar";
 
-import { resources } from "@/lib/data";
+import { resources, Resource } from "@/lib/data";
 
 export default function Home() {
   return (
@@ -15,21 +15,23 @@ export default function Home() {
 
       <div className="flex flex-row w-screen mt-20">
         <Sidebar />
-        <div className="grow flex flex-col w-full overflow-scroll p-4 divide-y">
-          {resources.map((domain) => (
-            <ResourceCard key={domain} name={domain} />
+        <div className="grow grid grid-cols-2 w-full overflow-scroll p-4 gap-2 ml-72">
+          {resources.map((resource) => (
+            <ResourceCard key={resource.name} resource={resource} />
           ))}
         </div>
-        <Sidebar />
       </div>
     </>
   );
 }
 
-function ResourceCard({ name }: { name: string }) {
+function ResourceCard({ resource }: { resource: Resource }) {
   return (
-    <div className="p-4 h-48 w-full rounded-sm hover:bg-neutral-100 hover:cursor-pointer tracking-tight">
-      <div>{name}</div>
-    </div>
+    <a
+      href={`/resources/${resource.id}`}
+      className="p-4 h-48 w-full rounded-sm hover:bg-neutral-100 hover:cursor-pointer tracking-tight"
+    >
+      <p>{resource.name}</p>
+    </a>
   );
 }
