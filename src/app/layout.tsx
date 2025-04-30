@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import { SiteHeader } from "@/components/site-header";
+import Header from "@/components/Header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import "./globals.css";
@@ -16,24 +16,19 @@ const inter = Inter({
   display: "swap",
 });
 
-export default function RootLayout() {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" className={inter.className}>
-      <body className="[--header-height:calc(theme(spacing.14))]">
+      <body className="[--header-height:4rem]">
         <SidebarProvider className="flex flex-col">
-          <SiteHeader />
-          <div className="flex flex-1">
+          <Header />
+          <div className="flex flex-1 overflow-hidden">
             <AppSidebar />
-            <SidebarInset>
-              <div className="flex flex-1 flex-col gap-4 p-4">
-                <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                  <div className="aspect-video rounded-xl bg-muted/50" />
-                  <div className="aspect-video rounded-xl bg-muted/50" />
-                  <div className="aspect-video rounded-xl bg-muted/50" />
-                </div>
-                <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
-              </div>
-            </SidebarInset>
+            <SidebarInset className="mt-16">{children}</SidebarInset>
           </div>
         </SidebarProvider>
       </body>
